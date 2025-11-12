@@ -4,6 +4,7 @@ class NotesHandler {
     constructor(service, validator) {
         this._service = service;
         this._validator = validator;
+        this.putNoteByIdHandler = this.putNoteByIdHandler.bind(this);
     }
 
     postNoteHandler = async (request, h) => {
@@ -94,12 +95,12 @@ class NotesHandler {
         // }
     }
 
-    putNoteByIdHandler = async (request, h) => {
+    async putNoteByIdHandler(request, h) {
         // try {
         this._validator.validateNotePayload(request.payload);
         const { id } = request.params;
 
-        await this._service.editNoteById(id, request.payload);
+        this._service.editNoteById(id, request.payload);
 
         return {
             status: 'success',
